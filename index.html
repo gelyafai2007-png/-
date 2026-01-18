@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Ксенар 15 лет!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #ffd700 100%);
+            color: white;
+            font-family: 'Arial Black', 'Impact', sans-serif;
+            text-align: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .page {
+            display: none;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .active {
+            display: block;
+        }
+        
+        h1 {
+            color: #ffd700;
+            font-size: 52px;
+            margin: 40px 0 20px 0;
+            text-shadow: 3px 3px 0 #1e3c72,
+                       6px 6px 0 rgba(0,0,0,0.2);
+            animation: bounce 2s infinite alternate;
+        }
+        
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+        
+        .main-text {
+            font-size: 42px;
+            color: #ffffff;
+            margin: 30px 0 50px 0;
+            font-weight: bold;
+            text-shadow: 2px 2px 0 #1e3c72;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .buttons {
+            margin: 50px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        .menu-btn {
+            width: 350px;
+            padding: 25px;
+            font-size: 28px;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: #ffd700;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3),
+                       0 0 0 3px #ffd700,
+                       0 0 20px #ffd700;
+            transition: all 0.3s;
+        }
+        
+        .menu-btn:hover {
+            transform: scale(1.1) rotate(2deg);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4),
+                       0 0 0 5px #ffd700,
+                       0 0 30px #ffd700;
+            background: linear-gradient(45deg, #2a5298, #1e3c72);
+        }
+        
+        .back-btn {
+            width: 200px;
+            padding: 15px;
+            font-size: 20px;
+            background: #ffd700;
+            color: #1e3c72;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 20px auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        
+        .back-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        
+        h2 {
+            color: #ffd700;
+            font-size: 44px;
+            margin: 30px 0;
+            text-shadow: 2px 2px 0 #1e3c72;
+        }
+        
+        /* КНОПКА ДЛЯ ПОЖЕЛАНИЙ */
+        .show-wish-btn {
+            width: 400px;
+            padding: 25px;
+            font-size: 26px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #1e3c72;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 30px auto;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .show-wish-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4),
+                       0 0 20px #ffd700;
+        }
+        
+        .show-wish-btn:active {
+            transform: scale(0.98);
+        }
+        
+        /* ОКНО С ПОЖЕЛАНИЕМ */
+        .wish-display {
+            min-height: 200px;
+            background: rgba(30, 60, 114, 0.9);
+            border: 5px solid #ffd700;
+            border-radius: 20px;
+            margin: 40px auto;
+            padding: 40px;
+            max-width: 800px;
+            box-shadow: 0 0 30px #ffd700,
+                       inset 0 0 20px rgba(255, 215, 0, 0.3);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .wish-text {
+            font-size: 28px;
+            color: #ffffff;
+            text-align: center;
+            line-height: 1.4;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px #000;
+        }
+        
+        .wish-number {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffd700;
+            color: #1e3c72;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border: 3px solid white;
+        }
+        
+        .counter {
+            font-size: 20px;
+            color: #ffd700;
+            margin: 20px;
+            font-weight: bold;
+            text-shadow: 1px 1px 0 #1e3c72;
+        }
+        
+        /* ГАЛЕРЕЯ - ИСПРАВЛЕНА! */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        
+        .gallery img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 4px solid #ffd700;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            cursor: pointer;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+        }
+        
+        .gallery img:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4),
+                       0 0 20px #ffd700;
+        }
+        
+        /* МОДАЛЬНОЕ ОКНО ДЛЯ ФОТО */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-img {
+            max-width: 90%;
+            max-height: 80%;
+            border: 5px solid #ffd700;
+            border-radius: 10px;
+            box-shadow: 0 0 40px #ffd700;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            color: white;
+            font-size: 50px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        /* АНИМАЦИИ */
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .pop-in {
+            animation: popIn 0.5s ease-out;
+        }
+        
+        /* ДЕКОРАЦИИ */
+        .confetti {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            background: #ffd700;
+            opacity: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        /* МЕДИА ЗАПРОСЫ */
+        @media (max-width: 768px) {
+            h1 { font-size: 36px; }
+            .main-text { font-size: 30px; }
+            .menu-btn { width: 280px; font-size: 22px; }
+            .show-wish-btn { width: 300px; font-size: 20px; }
+            .wish-text { font-size: 22px; }
+            .gallery { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        @media (max-width: 480px) {
+            h1 { font-size: 28px; }
+            .main-text { font-size: 24px; }
+            .menu-btn { width: 250px; font-size: 18px; }
+            .show-wish-btn { width: 250px; font-size: 18px; }
+            .wish-text { font-size: 20px; }
+            .gallery { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Главная страница -->
+    <div id="home" class="page active">
+        <h1>С днем рождения, Ксенар!</h1>
+        <div class="main-text">Вот тебе и исполнилось 15!</div>
+        
+        <div class="buttons">
+            <button class="menu-btn" onclick="showPage('wishes')">
+                💌 ПОКАЗАТЬ ПОЖЕЛАНИЯ
+            </button>
+            <button class="menu-btn" onclick="showPage('gallery')">
+                📸 ФОТОАЛЬБОМ
+            </button>
+        </div>
+        
+        <div style="margin-top: 100px; color: rgba(255,255,255,0.7); font-size: 18px;">
+            🎉 Жми на кнопки! 🎉
+        </div>
+    </div>
+
+    <!-- Пожелания -->
+    <div id="wishes" class="page">
+        <button class="back-btn" onclick="showPage('home')">← НА ГЛАВНУЮ</button>
+        <h2>22 пожелания для Ксенар</h2>
+        
+        <div class="counter">
+            Нажми кнопку чтобы увидеть пожелание:
+        </div>
+        
+        <!-- КНОПКА ДЛЯ ПОКАЗА ПОЖЕЛАНИЙ -->
+        <button class="show-wish-btn" onclick="showRandomWish()">
+            🎁 ПОКАЗАТЬ ПОЖЕЛАНИЕ
+        </button>
+        
+        <!-- ОКНО ГДЕ ПОЯВЛЯЕТСЯ ПОЖЕЛАНИЕ -->
+        <div class="wish-display">
+            <div class="wish-text" id="wishText">
+                Здесь появится пожелание!<br>
+                Жми кнопку выше ↑
+            </div>
+            <div class="wish-number" id="wishNumber">?</div>
+        </div>
+        
+        <div class="counter">
+            Осталось пожеланий: <span id="remainingWishes">22</span>
+        </div>
+    </div>
+
+    <!-- Фотоальбом -->
+    <div id="gallery" class="page">
+        <button class="back-btn" onclick="showPage('home')">← НА ГЛАВНУЮ</button>
+        <h2>Фотоальбом 15-летия</h2>
+        
+        <div class="gallery">
+            <!-- ЗАМЕНИТЕ photo1.jpg, photo2.jpg НА СВОИ ФОТОГРАФИИ -->
+            <!-- Положите фотографии в ту же папку, что и этот файл -->
+            <img src="photo1.jpeg" alt="Фото 1" onclick="openPhotoModal('photo1.jpeg')">
+            <img src="photo2.jpeg" alt="Фото 2" onclick="openPhotoModal('photo2.jpeg')">
+            <img src="photo3.jpeg" alt="Фото 3" onclick="openPhotoModal('photo3.jpeg')">
+            <img src="photo4.jpeg" alt="Фото 4" onclick="openPhotoModal('photo4.jpeg')">
+            <img src="photo5.jpeg" alt="Фото 5" onclick="openPhotoModal('photo5.jpeg')">
+            <img src="photo6.jpeg" alt="Фото 6" onclick="openPhotoModal('photo6.jpeg')">
+        </div>
+        
+        <div style="color: #ffd700; margin-top: 40px; font-size: 20px;">
+            🎯 Жми на фото чтобы увеличить!
+        </div>
+    </div>
+
+    <!-- Модальное окно для фото -->
+    <div class="modal" id="photoModal" onclick="closePhotoModal()">
+        <span class="close-btn" onclick="closePhotoModal()">×</span>
+        <img class="modal-img" id="modalImage" src="" alt="Увеличенное фото">
+    </div>
+
+    <script>
+        // Список всех 22 пожеланий
+        const wishes = [
+            "Ты станешь самым крутым мелстроем",
+            "Ты скачаешь РДР 2",
+            "Ты апнешь рекрута 1",
+            "Мелстрой заметит тебя",
+            "Ты удалишь тик ток",
+            "Ты сожжешь свой телефон",
+            "Вы начнете встречаться с сиегой",
+            "Сиега простит тебя (маловероятно)",
+            "Слезешь с тяжелых",
+            "Клзхдвазлдкзхлдаплздхкп",
+            "Тебе подарят рыбу фаршмак",
+            "Писюн",
+            "Дарова",
+            "Ты выучишь алфавит",
+            "Тебе выбьют зубы",
+            "Ты пикнеш пуджа (маленького)",
+            "Ты не умрешь ЗАВТРА",
+            "Котокбас",
+            "Ты откроешь свой магазин и станешь главным кассиром",
+            "Тебе подарят пончиковый флеш",
+            "Ты сделаешь ферму маркови...",
+            "Вы наконец-то пройдете зе форест"
+        ];
+        
+        // Массив для отслеживания показанных пожеланий
+        let shownWishes = [];
+        let remainingWishes = [...wishes]; // Копия для оставшихся пожеланий
+        
+        // Функция показа случайного пожелания
+        function showRandomWish() {
+            if (remainingWishes.length === 0) {
+                // Если все пожелания показаны
+                document.getElementById('wishText').innerHTML = 
+                    "🎉 Все пожелания показаны!<br>С днем рождения ещё раз!";
+                document.getElementById('wishNumber').textContent = "🎁";
+                document.getElementById('remainingWishes').textContent = "0";
+                createConfetti();
+                return;
+            }
+            
+            // Выбираем случайное пожелание из оставшихся
+            const randomIndex = Math.floor(Math.random() * remainingWishes.length);
+            const selectedWish = remainingWishes[randomIndex];
+            const wishNumber = wishes.indexOf(selectedWish) + 1;
+            
+            // Убираем выбранное пожелание из массива оставшихся
+            remainingWishes.splice(randomIndex, 1);
+            
+            // Добавляем в показанные
+            shownWishes.push(selectedWish);
+            
+            // Показываем пожелание
+            document.getElementById('wishText').textContent = selectedWish;
+            document.getElementById('wishNumber').textContent = wishNumber;
+            document.getElementById('remainingWishes').textContent = remainingWishes.length;
+            
+            // Анимация
+            document.getElementById('wishText').classList.remove('pop-in');
+            void document.getElementById('wishText').offsetWidth; // Перезапуск анимации
+            document.getElementById('wishText').classList.add('pop-in');
+            
+            // Создаем конфетти
+            createConfetti();
+        }
+        
+        // Функция смены страниц
+        function showPage(pageId) {
+            // Скрыть все страницы
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Показать нужную страницу
+            document.getElementById(pageId).classList.add('active');
+            
+            // Сброс пожеланий если переходим на страницу пожеланий
+            if (pageId === 'wishes') {
+                remainingWishes = [...wishes];
+                shownWishes = [];
+                document.getElementById('wishText').innerHTML = 
+                    "Здесь появится пожелание!<br>Жми кнопку выше ↑";
+                document.getElementById('wishNumber').textContent = "?";
+                document.getElementById('remainingWishes').textContent = "22";
+            }
+        }
+        
+        // Функции для работы с фото
+        function openPhotoModal(photoSrc) {
+            document.getElementById('modalImage').src = photoSrc;
+            document.getElementById('photoModal').classList.add('active');
+        }
+        
+        function closePhotoModal() {
+            document.getElementById('photoModal').classList.remove('active');
+        }
+        
+        // Закрытие модального окна при клике вне фото
+        document.getElementById('photoModal').addEventListener('click', function(e) {
+            if (e.target === this || e.target.className === 'close-btn') {
+                closePhotoModal();
+            }
+        });
+        
+        // Создание конфетти
+        function createConfetti() {
+            const colors = ['#ffd700', '#ffed4e', '#1e3c72', '#2a5298', '#ffffff'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-20px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 15 + 5 + 'px';
+                confetti.style.height = confetti.style.width;
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                
+                document.body.appendChild(confetti);
+                
+                // Анимация падения
+                const animation = confetti.animate([
+                    { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                    { transform: `translateY(${window.innerHeight + 100}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                ], {
+                    duration: Math.random() * 3000 + 2000,
+                    easing: 'cubic-bezier(0.215, 0.610, 0.355, 1)'
+                });
+                
+                // Удаляем после анимации
+                animation.onfinish = () => confetti.remove();
+            }
+        }
+        
+        // Создаем немного конфетти при загрузке
+        window.addEventListener('load', () => {
+            setTimeout(createConfetti, 500);
+        });
+    </script>
+</body>
+</html>
